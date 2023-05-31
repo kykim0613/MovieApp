@@ -2,7 +2,7 @@ import { useState } from "react";
 import Router from "./Router";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { useRecoilValue } from "recoil";
-import { isDarkAtom } from "./atom";
+import { LoggedIn, isDarkAtom } from "./atom";
 import { darkMode, lightMode } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
@@ -64,7 +64,7 @@ body {
   background-color: ${(props) => props.theme.bgColor};
   color: ${(props) => props.theme.textColor};
   line-height: 1.2;
-  overflow: hidden;
+  min-width: 1400px;
 }
 a {
   text-decoration:none;
@@ -74,14 +74,13 @@ a {
 
 
 const App = () => {
-    const isDark = useRecoilValue(isDarkAtom);
-
-    return (
-        <ThemeProvider theme={isDark ? darkMode : lightMode}>
-            <GlobalStyle />
-            <Router />
-        </ThemeProvider>
-    )
+  const isDark = useRecoilValue(isDarkAtom);
+  return (
+    <ThemeProvider theme={isDark ? darkMode : lightMode}>
+      <GlobalStyle />
+      <Router />
+    </ThemeProvider>
+  )
 }
 
 export default App;

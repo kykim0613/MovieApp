@@ -5,17 +5,18 @@ import Book from "./pages/Book";
 import Auth from "./components/Auth";
 import CreateAccount from "./components/CreateAccount";
 
-const Router = () => {
+const Router = (auth) => {
     return (
         <BrowserRouter>
-        <Header />
-        <Outlet/>
-        <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/Book" element={<Book />} />
-            <Route path="/Auth" element={<Auth />} />
-            <Route path="/CreateAccount" element={<CreateAccount />} />
-        </Routes>
+            <Header />
+            <Outlet />
+            <Routes>
+                <Route path="/" element={<Main auth={auth} />} />
+                <Route path="/Book" element={<Book auth={auth} />} />
+                <Route path="/Auth" element={<Auth />} />
+                <Route path="/CreateAccount" element={<CreateAccount />} />
+            </Routes>
+
         </BrowserRouter>
     )
 }

@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom"
+import { useRecoilState, useRecoilValue } from "recoil"
 import styled from "styled-components"
+import { LoggedIn, LoggedUser } from "../atom"
+import CreateAccount from "./CreateAccount"
+import Auth from "./Auth"
 
 const HeadBox = styled.div`
     width: 800px;
@@ -42,6 +46,12 @@ const Menu = styled.div`
 
 
 const Header = () => {
+    const user = useRecoilValue(LoggedUser)
+    const [loggedOut, setLoggedOut] = useRecoilState(LoggedIn)
+
+    const LoggedOut = () => {
+        setLoggedOut(false)
+    }
     return (
         <>
             <HeadBox>
@@ -51,19 +61,33 @@ const Header = () => {
                         style={{ width: "100px", cursor: "pointer" }}
                     />
                 </Link>
-                <AuthMenuBox>
+                {loggedOut ? (
+                    <AuthMenuBox>
                     <AuthMenu>
-                        <Link to={'/Auth'}>
-                        로그인
+                        <Link>
+                            {user?.name}님
                         </Link>
-                        </AuthMenu>
-                    <AuthMenu>
-                        <Link to={`/CreateAccount`}>
-                        회원가입
-                        </Link>
-                        </AuthMenu>
+                    </AuthMenu>
+                    <AuthMenu onClick={LoggedOut} style={{cursor: "pointer"}}>
+                            로그아웃
+                    </AuthMenu>
                     <AuthMenu>MY CGV</AuthMenu>
                 </AuthMenuBox>
+                ):(
+                    <AuthMenuBox>
+                    <AuthMenu>
+                        <Link to={'/Auth'}>
+                            로그인
+                        </Link>
+                    </AuthMenu>
+                    <AuthMenu>
+                        <Link to={'/CreateAccount'}>
+                            회원가입
+                        </Link>
+                    </AuthMenu>
+                    <AuthMenu>MY CGV</AuthMenu>
+                </AuthMenuBox>
+                )}
             </HeadBox>
             <MenuLine>
                 <MenuBox>
